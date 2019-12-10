@@ -37,7 +37,7 @@ func (k KubeYAML) Set(in []byte, ns, kind, name string, values ...string) ([]byt
 
 func execKubeyaml(in []byte, args []string) ([]byte, error) {
 	ctx := context.Background()
-	ctx, cancel := context.WithTimeout(ctx, time.Second*30)
+	ctx, cancel := context.WithTimeout(ctx, time.Second*20)
 	defer cancel()
 	cmd := exec.CommandContext(ctx, "kubeyaml", args...)
 	out := &bytes.Buffer{}
