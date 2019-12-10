@@ -1,2 +1,4 @@
-#!/bin/sh
-docker run -i quay.io/squaremo/kubeyaml:0.7.0 "$@"
+#!/bin/bash
+stdin="$(cat)"
+docker pull quay.io/squaremo/kubeyaml:0.7.0 > /dev/null 2>&1
+printf "%s" "$stdin" | docker run -i quay.io/squaremo/kubeyaml:0.7.0 "$@"

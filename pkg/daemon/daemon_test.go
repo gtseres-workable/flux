@@ -55,7 +55,7 @@ const (
 
 var testBytes = []byte(`{}`)
 
-const timeout = 10 * time.Second
+const timeout = 20 * time.Second
 
 // When I ping, I should get a response
 func TestDaemon_Ping(t *testing.T) {
