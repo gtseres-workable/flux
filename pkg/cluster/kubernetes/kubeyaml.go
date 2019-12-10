@@ -2,9 +2,11 @@ package kubernetes
 
 import (
 	"bytes"
+	"context"
 	"errors"
 	"os/exec"
 	"strings"
+	"time"
 )
 
 // KubeYAML is a placeholder value for calling the helper executable
@@ -34,7 +36,10 @@ func (k KubeYAML) Set(in []byte, ns, kind, name string, values ...string) ([]byt
 }
 
 func execKubeyaml(in []byte, args []string) ([]byte, error) {
-	cmd := exec.Command("kubeyaml", args...)
+	ctx := context.Background()
+	ctx, cancel := context.WithTimeout(ctx, time.Second*30)
+	defer cancel()
+	cmd := exec.CommandContext(ctx, "kubeyaml", args...)
 	out := &bytes.Buffer{}
 	errOut := &bytes.Buffer{}
 	cmd.Stdin = bytes.NewBuffer(in)
