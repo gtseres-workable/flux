@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"errors"
+	"fmt"
 	"os/exec"
 	"strings"
 	"time"
@@ -45,8 +46,9 @@ func execKubeyaml(in []byte, args []string) ([]byte, error) {
 	cmd.Stdin = bytes.NewBuffer(in)
 	cmd.Stdout = out
 	cmd.Stderr = errOut
-
+	fmt.Printf("Running command kubeyaml %s\n", args)
 	err := cmd.Run()
+	fmt.Printf("Returned from command call\n")
 	if err != nil {
 		if errOut.Len() == 0 {
 			return nil, err
