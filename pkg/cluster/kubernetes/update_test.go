@@ -34,6 +34,7 @@ func testUpdateWorkloadContainer(t *testing.T, u update) {
 			t.Errorf("Failed: %s", err.Error())
 			return
 		}
+		fmt.Printf("returned from updateWorkloadContainer()\n")
 		manifest = string(out)
 	}
 	if manifest != u.caseOut {
@@ -54,6 +55,7 @@ func testUpdateWorkloadImagePath(t *testing.T, u update) {
 		t.Errorf("Failed: %s", err.Error())
 		return
 	}
+	fmt.Printf("returned from updateWorkloadImagePaths()\n")
 	manifest = string(out)
 	if manifest != u.caseOut {
 		t.Errorf("it did not get expected result:\n\n%s\n\nInstead got:\n\n%s", u.caseOut, manifest)
