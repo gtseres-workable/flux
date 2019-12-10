@@ -1,7 +1,9 @@
 package kubernetes
 
 import (
+	"fmt"
 	"testing"
+	"time"
 
 	kresource "github.com/fluxcd/flux/pkg/cluster/kubernetes/resource"
 	"github.com/fluxcd/flux/pkg/image"
@@ -27,6 +29,7 @@ func testUpdateWorkloadContainer(t *testing.T, u update) {
 	for _, container := range u.containers {
 		var out []byte
 		var err error
+		fmt.Printf("calling updateWorkloadContainer(manifest, %s, %s, %s)\n", resource.MustParseID(u.resourceID), container, id)
 		if out, err = updateWorkloadContainer([]byte(manifest), resource.MustParseID(u.resourceID), container, id); err != nil {
 			t.Errorf("Failed: %s", err.Error())
 			return
@@ -76,12 +79,15 @@ func TestWorkloadContainerUpdates(t *testing.T) {
 		{"initContainer", case15resource, case15containers, case15image, case15, case15out, emptyContainerImageMap},
 	} {
 		t.Run(c.name, func(t *testing.T) {
+			start := time.Now()
+			fmt.Printf("Running: %s\n", c.name)
 			switch c.imageAnnotations {
 			case emptyContainerImageMap:
 				testUpdateWorkloadContainer(t, c)
 			default:
 				testUpdateWorkloadImagePath(t, c)
 			}
+			fmt.Printf("Took: %.1f seconds\n", time.Now().Sub(start).Seconds())
 		})
 	}
 }
