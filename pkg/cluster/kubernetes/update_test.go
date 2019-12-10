@@ -49,6 +49,7 @@ func testUpdateWorkloadImagePath(t *testing.T, u update) {
 
 	manifest := u.caseIn
 	var out []byte
+	fmt.Printf("calling updateWorkloadImagePaths(manifest, %s, %s, %s)\n", resource.MustParseID(u.resourceID), u.imageAnnotations, id)
 	if out, err = updateWorkloadImagePaths([]byte(manifest), resource.MustParseID(u.resourceID), u.imageAnnotations, id); err != nil {
 		t.Errorf("Failed: %s", err.Error())
 		return
